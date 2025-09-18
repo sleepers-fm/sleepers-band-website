@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sleepers - Rock Band</title>
+    <style>
+        @font-face {
+            font-family: 'TheSkinny';
+            src: url('fonts/TheSkinny.woff2') format('woff2'),
+                 url('fonts/TheSkinny.woff') format('woff'),
+                 url('fonts/TheSkinny.otf') format('opentype'),
+                 url('fonts/TheSkinny.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 0, 100, 0.1) 0%, transparent 50%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="g"><stop offset="0%" stop-color="%23ffffff" stop-opacity="0.1"/><stop offset="100%" stop-color="%23ffffff" stop-opacity="0"/></radialGradient></defs><circle cx="200" cy="200" r="3" fill="url(%23g)"/><circle cx="800" cy="300" r="2" fill="url(%23g)"/><circle cx="400" cy="600" r="2" fill="url(%23g)"/><circle cx="700" cy="800" r="3" fill="url(%23g)"/><circle cx="100" cy="700" r="1" fill="url(%23g)"/><circle cx="900" cy="100" r="2" fill="url(%23g)"/></svg>') repeat;
+            animation: twinkle 8s ease-in-out infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .band-logo {
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+
+        .band-name {
+            font-family: 'TheSkinny', 'Orbitron', 'Arial', sans-serif;
+            font-size: 10rem;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            background: linear-gradient(45deg, #ff006e, #8338ec, #3a86ff);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-shift 3s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(255, 0, 110, 0.5);
+            margin-bottom: 1rem;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .tagline {
+            font-size: 1.5rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem 2rem;
+            background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav.scrolled {
+            background: rgba(10, 10, 10, 0.95);
+            box-shadow: 0 2px 20px rgba(255, 0, 110, 0.2);
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-logo {
+            font-family: 'TheSkinny', 'Orbitron', 'Arial', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #ffffff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+        }
+
+        .nav-links a:hover {
+            color: #ff006e;
+            background: rgba(255, 0, 110, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section h2 {
+            font-size: 3rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(45deg, #ff006e, #8338ec);
+            border-radius: 2px;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 4rem;
+        }
+
+        .about-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        .about-image {
+            height: 400px;
+            background: linear-gradient(45deg, rgba(255, 0, 110, 0.3), rgba(131, 56, 236, 0.3));
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.7);
+            border: 2px solid rgba(255, 0, 110, 0.3);
+        }
+
+        .music-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .track-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 0, 110, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .track-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 0, 110, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .track-card:hover::before {
+            left: 100%;
+        }
+
+        .track-card:hover {
+            transform: translateY(-5px);
+            border-color: #ff006e;
+            box-shadow: 0 10px 30px rgba(255, 0, 110, 0.3);
+        }
+
+        .track-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #ff006e;
+        }
+
+        .track-description {
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+
+        .shows-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .show-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid #ff006e;
+            transition: all 0.3s ease;
+        }
+
+        .show-item:hover {
+            background: rgba(255, 0, 110, 0.1);
+            transform: translateX(10px);
+        }
+
+        .show-date {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #8338ec;
+        }
+
+        .show-venue {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .show-location {
+            opacity: 0.7;
+        }
+
+        .contact-content {
+            text-align: center;
+            margin-top: 4rem;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, #ff006e, #8338ec);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #8338ec, #3a86ff);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .contact-link:hover::before {
+            left: 0;
+        }
+
+        .contact-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 0, 110, 0.4);
+        }
+
+        .footer {
+            background: rgba(10, 10, 10, 0.9);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 0, 110, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .band-name {
+                font-size: 3rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .show-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+
+            .contact-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        .pulse {
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav" id="nav">
+        <div class="nav-content">
+            <div class="nav-logo">S L E E P E R S</div>
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#music">Music</a>
+                <a href="#shows">Shows</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="band-logo">
+            <h1 class="band-name">SLEEPERS         </h1>
+            <p class="tagline pulse">Wake Up to the Sound</p>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <h2>About the Band</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>Sleepers emerged from an underground basement with a sound that defies categorization. Blending heavy riffs with ethereal bodies, we create music that awakens the soul and stirs the spirit.</p>
+                <p>Born from evening jam sessions and fueled by continous improvement, our music tells stories of dreams, rebellion, and the search for meaning. Each song is a journey through soundscapes that range from thunderous to sublime.</p>
+                <p>We're not just a band – we're a collective of artists committed to pushing boundaries and creating experiences that resonate long after the last note fades.</p>
+            </div>
+            <div class="about-image">
+                🎸
+            </div>
+        </div>
+    </section>
+
+    <section id="music" class="section">
+        <h2>Our Music</h2>
+        <div class="music-grid">
+
+            <div class="track-card embed-card">
+                <div class="track-card-content">
+                    <h3 class="track-title">Sleepers</h3>
+                    <p class="track-description">Our very first full length album, aka the black album.</p>
+                    <div class="track-player">
+                        <iframe style="border: 0; width: 350px; height: 350px;" src="https://bandcamp.com/EmbeddedPlayer/album=3229988145/size=large/bgcol=333333/linkcol=ff006e/minimal=true/transparent=true/" seamless><a href="https://sleepersmd.bandcamp.com/album/sleepers"></a></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <div class="track-card">
+                <h3 class="track-title">Sleepers II</h3>
+                <p class="track-description">Our second full length album, aka Sleepers II.</p>
+                <div class="track-card-content">
+                    <div class="track-player">
+                        <iframe style="border: 0; width: 350px; height: 350px;" src="https://bandcamp.com/EmbeddedPlayer/album=347955995/size=large/bgcol=333333/linkcol=ff006e/minimal=true/transparent=true/" seamless><a href="https://sleepersmd.bandcamp.com/album/sleepers-2"></a></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="shows" class="section">
+        <h2>Upcoming Shows</h2>
+        <div class="shows-grid">
+            <div class="show-item">
+                <div>
+                    <div class="show-date">Sept 07, 2025</div>
+                    <div class="show-venue">Takoma Park Folk Festival</div>
+                    <div class="show-location">Takoma Park, MD</div>
+                </div>
+            </div>
+            <div class="show-item">
+                <div>
+                    <div class="show-date">Dec 28, 2025</div>
+                    <div class="show-venue">The Shire</div>
+                    <div class="show-location">Middle Earth</div>
+                </div>
+            </div>
+            <div class="show-item">
+                <div>
+                    <div class="show-date">Jan 12, 2026</div>
+                    <div class="show-venue">The Rooftop</div>
+                    <div class="show-location">Abbey Road, UK</div>
+                </div>
+            </div>
+            <div class="show-item">
+                <div>
+                    <div class="show-date">Jan 25, 2026</div>
+                    <div class="show-venue">Jay's Mon's Birthday Party Gig</div>
+                    <div class="show-location">Waynesboro, PA</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <h2>Get in Touch</h2>
+        <div class="contact-content">
+            <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">Ready to book us for your venue or just want to connect? Reach out through any of these channels.</p>
+            <div class="contact-links">
+                <a href="mailto:sleepers.fm@gmail.com" class="contact-link" >Email Us</a>
+                <a href="https://music.apple.com/us/artist/sleepers/1819775621" class="contact-link" target="_blank">Apple Music</a>
+                <a href="https://open.spotify.com/artist/1En7vIXVtM9HUxM1nCfGj6?si=Mvr1f-15SDC3nlTam2aHPg" class="contact-link" target="_blank">Spotify</a>
+                <a href="https://youtube.com/channel/UCuHkOtggJv-mSI2eR97aZfg?si=36NbhRecLNDNeH7u" class="contact-link" target="_blank">YouTube</a>
+                <a href="http://sleepersmd.bandcamp.com" class="contact-link" target="_blank">Bandcamp</a>
+                <a href="https://soundcloud.com/sleepersband" class="contact-link" target="_blank">Soundcloud</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2025 Sleepers. All rights reserved. | Wake up to the sound.</p>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navigation scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('nav');
+            if (window.scrollY > 100) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Add intersection observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections for scroll animations
+        document.querySelectorAll('.section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(30px)';
+            section.style.transition = 'all 0.6s ease-out';
+            observer.observe(section);
+        });
+
+        // Add some interactive effects
+        document.querySelectorAll('.track-card, .show-item').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
