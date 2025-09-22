@@ -7,10 +7,7 @@
     <style>
         @font-face {
             font-family: 'TheSkinny';
-            src: url('fonts/TheSkinny.woff2') format('woff2'),
-                 url('fonts/TheSkinny.woff') format('woff'),
-                 url('fonts/TheSkinny.otf') format('opentype'),
-                 url('fonts/TheSkinny.ttf') format('truetype');
+            src: url('fonts/TheSkinny.otf') format('opentype');
             font-weight: normal;
             font-style: normal;
             font-display: swap;
@@ -60,7 +57,7 @@
         }
 
         .band-name {
-            font-family: 'TheSkinny', 'Orbitron', 'Arial', sans-serif;
+            font-family: 'TheSkinny';
             font-size: 10rem;
             font-weight: 900;
             letter-spacing: 0.1em;
@@ -112,7 +109,7 @@
         }
 
         .nav-logo {
-            font-family: 'TheSkinny', 'Orbitron', 'Arial', sans-serif;
+            font-family: 'TheSkinny';
             font-size: 1.5rem;
             font-weight: 500;
             color: #ffffff;
@@ -187,6 +184,50 @@
             font-size: 4rem;
             color: rgba(255, 255, 255, 0.7);
             border: 2px solid rgba(255, 0, 110, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+         .about-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 18px;
+            display: block;
+        }
+
+        .about-image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255, 0, 110, 0.2), rgba(131, 56, 236, 0.2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .about-image:hover .about-image-overlay {
+            opacity: 1;
+        }
+
+        .about-image-link {
+            padding: 1rem 2rem;
+            background: rgba(255, 0, 110, 0.9);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .about-image-link:hover {
+            background: rgba(255, 0, 110, 1);
+            transform: scale(1.05);
         }
 
         .music-grid {
@@ -383,7 +424,7 @@
     <section id="home" class="hero">
         <div class="band-logo">
             <h1 class="band-name">SLEEPERS         </h1>
-            <p class="tagline pulse">Wake Up to the Sound</p>
+            <p class="tagline pulse">Wake to the Smell of Sound</p>
         </div>
     </section>
 
@@ -395,8 +436,8 @@
                 <p>Born from evening jam sessions and fueled by continous improvement, our music tells stories of dreams, rebellion, and the search for meaning. Each song is a journey through soundscapes that range from thunderous to sublime.</p>
                 <p>We're not just a band – we're a collective of artists committed to pushing boundaries and creating experiences that resonate long after the last note fades.</p>
             </div>
-            <div class="about-image">
-                <img src="images/band-photo.jpg" alt="Sleepers band members" style="width: 100%; height: 100%; object-fit: cover; border-radius: 15px;">
+            <div class="about-image" aria-label="Sleepers band photo">
+                <img src="images/band-photo.jpg" alt="Sleepers band members performing">    
             </div>
         </div>
     </section>
@@ -455,7 +496,7 @@
             <div class="show-item">
                 <div>
                     <div class="show-date">Jan 25, 2026</div>
-                    <div class="show-venue">Jay's Mon's Birthday Party Gig</div>
+                    <div class="show-venue">Jay's Mom's Birthday Party Gig</div>
                     <div class="show-location">Waynesboro, PA</div>
                 </div>
             </div>
@@ -478,7 +519,7 @@
     </section>
 
     <footer class="footer">
-        <p>&copy; 2025 Sleepers. All rights reserved. | Wake up to the sound.</p>
+        <p>&copy; 2025 Sleepers. All rights reserved. | Wake to the Smell of Sound.</p>
     </footer>
 
     <script>
