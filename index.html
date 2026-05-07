@@ -405,6 +405,56 @@
             0%, 100% { opacity: 0.7; }
             50% { opacity: 1; }
         }
+
+        /* ── Past Gigs Archive ── */
+.archive-intro {
+    text-align: center;
+    opacity: 0.65;
+    margin-top: -1.5rem;
+    margin-bottom: 3rem;
+    font-size: 0.95rem;
+}
+.archive-years { display: grid; gap: 1rem; margin-top: 4rem; }
+.archive-year-group {
+    border: 1px solid rgba(255, 0, 110, 0.25);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 0.3s ease;
+}
+.archive-year-group.open { border-color: rgba(255, 0, 110, 0.6); }
+.archive-year-toggle {
+    width: 100%; background: rgba(255,255,255,0.04); border: none;
+    color: #ffffff; cursor: pointer; padding: 1.2rem 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 1.3rem; font-weight: 700; letter-spacing: 0.05em;
+    transition: background 0.3s ease;
+}
+.archive-year-toggle:hover { background: rgba(255, 0, 110, 0.1); }
+.archive-year-label { display: flex; align-items: center; gap: 1rem; }
+.archive-year-label .year-text { color: #ff006e; }
+.archive-gig-count { font-size: 0.8rem; font-weight: 400; opacity: 0.5; }
+.archive-chevron {
+    width: 20px; height: 20px; flex-shrink: 0; opacity: 0.6;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.archive-year-group.open .archive-chevron { transform: rotate(180deg); opacity: 1; }
+.archive-gigs {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.archive-year-group.open .archive-gigs { max-height: 2000px; }
+.archive-gig-item {
+    display: grid; grid-template-columns: 180px 1fr; gap: 1rem;
+    padding: 1rem 2rem; border-top: 1px solid rgba(255,255,255,0.05);
+    transition: background 0.2s ease; align-items: start;
+}
+.archive-gig-item:hover { background: rgba(131, 56, 236, 0.08); }
+.archive-gig-date { font-size: 0.9rem; font-weight: 700; color: #8338ec; padding-top: 0.1rem; }
+.archive-gig-details .gig-venue { font-size: 1rem; font-weight: 600; margin-bottom: 0.2rem; }
+.archive-gig-details .gig-location { font-size: 0.85rem; opacity: 0.55; }
+@media (max-width: 768px) {
+    .archive-gig-item { grid-template-columns: 1fr; gap: 0.3rem; }
+}
     </style>
 </head>
 <body>
@@ -668,6 +718,22 @@
                 this.style.transform = 'translateY(0) scale(1)';
             });
         });
+
+        // Gig Archive accordion
+document.querySelectorAll('.archive-year-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const group = btn.closest('.archive-year-group');
+        const isOpen = group.classList.contains('open');
+        document.querySelectorAll('.archive-year-group').forEach(g => {
+            g.classList.remove('open');
+            g.querySelector('.archive-year-toggle').setAttribute('aria-expanded', 'false');
+        });
+        if (!isOpen) {
+            group.classList.add('open');
+            btn.setAttribute('aria-expanded', 'true');
+        }
+    });
+});
     </script>
 </body>
 </html>
